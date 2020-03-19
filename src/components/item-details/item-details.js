@@ -1,17 +1,18 @@
 import React, {Component} from 'react';
 
-import './person-details.css';
+import './item-details.css';
 import SwapiResourse from "../../api/api";
 import Spinner from "../spiner/spinner";
 import ErrorButton from "../error-button/error-button";
 
-export default class PersonDetails extends Component {
+export default class ItemDetails extends Component {
 
     swapi = new SwapiResourse();
 
     state = {
-        person: null,
-        loading: false
+        item: null,
+        loading: false,
+        image: null
     };
 
     componentDidMount() {
@@ -19,7 +20,7 @@ export default class PersonDetails extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.personId !== prevProps.personId) {
+        if (this.props.itemId !== prevProps.itemId) {
             this.setState({
                 loading: true
             });
@@ -28,28 +29,33 @@ export default class PersonDetails extends Component {
     }
 
     updatePerson() {
-        const {personId} = this.props;
+        const {itemId, getData, getImageUrl} = this.props;
 
-        if (!personId) {
+        if (!itemId) {
             return
         }
 
-        this.swapi.getPerson(personId)
-            .then((person) => {
-                this.setState({person, loading: false})
+        getData(itemId)
+            .then((item) => {
+                this.setState({
+                    item,
+                    loading: false,
+                    image: getImageUrl(item)
+                })
             })
     }
 
 
     render() {
 
-        if (!this.state.person) {
+        if (!this.state.item) {
             return <span>Select a person from a list</span>
         }
         // const {id, name, gender, birthYear, eyeColor} = this.state.person;
-        const {person, loading} = this.state;
+        const {item, loading, image} = this.state;
+
         const spinner = loading ? <Spinner/> : null;
-        const content = !loading ?  <PersonView person={person}/> : null;
+        const content = !loading ?  <ItemView item={item} image={image}/> : null;
 
         return (
             <div className="person-details card">
@@ -62,14 +68,15 @@ export default class PersonDetails extends Component {
     }
 }
 
-const PersonView = (props) => {
+const ItemView = (props) => {
 
-    const {id, name, gender, birthYear, eyeColor} = props.person;
+    const {id, name, gender, birthYear, eyeColor} = props.item;
+    const image = props.image;
 
     return (
         <React.Fragment>
             <img className="person-image"
-                 src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
+                 src={image}
                  alt="person"/>
 
             <div className="card-body">
