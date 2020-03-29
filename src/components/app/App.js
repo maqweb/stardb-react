@@ -2,11 +2,11 @@ import React from 'react';
 import './App.css';
 import Header from "../header/header";
 import RandomPlanet from "../random-planet/random-planet";
-import ErrorButton from "../error-button/error-button";
+// import ErrorButton from "../error-button/error-button";
 import ErrorIndicator from "../error-indicator/error-indicator";
-import PeoplePage from "../people-page/people-page";
+// import PeoplePage from "../people-page/people-page";
 import SwapiResourse from "../../api/api";
-import ItemDetails from "../item-details/item-details";
+import ItemDetails, {Record} from "../item-details/item-details";
 import Row from "../row/row";
 
 
@@ -44,7 +44,10 @@ class App extends React.Component {
         const {getPerson, getStarship, getPersonImage, getStarshipImage} = this.swapi;
 
         const personDetails = (
-            <ItemDetails itemId={11} getData={getPerson} getImageUrl={getPersonImage}/>
+            <ItemDetails itemId={11} getData={getPerson} getImageUrl={getPersonImage}>
+                <Record field="gender" label="Gender"/>
+                <Record field="eyeColor" label="Eye Color"/>
+            </ItemDetails>
         );
 
         const starshipDetails = (

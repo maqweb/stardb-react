@@ -5,6 +5,18 @@ import SwapiResourse from "../../api/api";
 import Spinner from "../spiner/spinner";
 import ErrorButton from "../error-button/error-button";
 
+
+const Record = ({item, field, label}) => {
+    return (
+        <li className="list-group-item">
+            <span className="term">{label}</span>
+            <span>{field}</span>
+        </li>
+    )
+};
+
+export {Record}
+
 export default class ItemDetails extends Component {
 
     swapi = new SwapiResourse();
@@ -55,7 +67,13 @@ export default class ItemDetails extends Component {
         const {item, loading, image} = this.state;
 
         const spinner = loading ? <Spinner/> : null;
-        const content = !loading ?  <ItemView item={item} image={image}/> : null;
+        const content = !loading ?
+            <ItemView item={item}
+                      image={image}
+                      children={React.Children.map(this.props.children, (child, idx) => {
+                        return <li>{idx}</li>;
+                      })}
+            /> : null;
 
         return (
             <div className="person-details card">
@@ -72,6 +90,7 @@ const ItemView = (props) => {
 
     const {id, name, gender, birthYear, eyeColor} = props.item;
     const image = props.image;
+    const children = props.children;
 
     return (
         <React.Fragment>
@@ -82,18 +101,7 @@ const ItemView = (props) => {
             <div className="card-body">
                 <h4>{name}</h4>
                 <ul className="list-group list-group-flush">
-                    <li className="list-group-item">
-                        <span className="term">Gender</span>
-                        <span>{gender}</span>
-                    </li>
-                    <li className="list-group-item">
-                        <span className="term">Birth Year</span>
-                        <span>{birthYear}</span>
-                    </li>
-                    <li className="list-group-item">
-                        <span className="term">Eye Color</span>
-                        <span>{eyeColor}</span>
-                    </li>
+                    {children}
                 </ul>
                 <ErrorButton/>
             </div>
