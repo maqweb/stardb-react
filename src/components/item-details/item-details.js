@@ -10,7 +10,7 @@ const Record = ({item, field, label}) => {
     return (
         <li className="list-group-item">
             <span className="term">{label}</span>
-            <span>{field}</span>
+            <span>{item[field]}</span>
         </li>
     )
 };
@@ -67,13 +67,14 @@ export default class ItemDetails extends Component {
         const {item, loading, image} = this.state;
 
         const spinner = loading ? <Spinner/> : null;
-        const content = !loading ?
-            <ItemView item={item}
+        const content = !loading
+            ? <ItemView item={item}
                       image={image}
                       children={React.Children.map(this.props.children, (child, idx) => {
-                        return <li>{idx}</li>;
+                        return React.cloneElement(child, {item});
                       })}
-            /> : null;
+            />
+            : null;
 
         return (
             <div className="person-details card">

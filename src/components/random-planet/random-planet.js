@@ -16,7 +16,6 @@ export default class RandomPlanet extends Component {
     };
 
     componentDidMount() {
-        console.log('mount');
         this.updatePlanet();
         this.interval = setInterval(this.updatePlanet, 10000);
     }
@@ -50,7 +49,6 @@ export default class RandomPlanet extends Component {
     };
 
     render() {
-        console.log('render');
         const {planet, loading, error} = this.state;
 
         const hasData = !(loading || error);
