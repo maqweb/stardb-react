@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 
 import './item-details.css';
-import SwapiResourse from "../../api/api";
 import Spinner from "../spiner/spinner";
 import ErrorButton from "../error-button/error-button";
 
@@ -18,8 +17,6 @@ const Record = ({item, field, label}) => {
 export {Record}
 
 export default class ItemDetails extends Component {
-
-    swapi = new SwapiResourse();
 
     state = {
         item: null,
@@ -69,10 +66,10 @@ export default class ItemDetails extends Component {
         const spinner = loading ? <Spinner/> : null;
         const content = !loading
             ? <ItemView item={item}
-                      image={image}
-                      children={React.Children.map(this.props.children, (child, idx) => {
-                        return React.cloneElement(child, {item});
-                      })}
+                        image={image}
+                        children={React.Children.map(this.props.children, (child, idx) => {
+                            return React.cloneElement(child, {item});
+                        })}
             />
             : null;
 
@@ -89,7 +86,7 @@ export default class ItemDetails extends Component {
 
 const ItemView = (props) => {
 
-    const {id, name, gender, birthYear, eyeColor} = props.item;
+    const {name} = props.item;
     const image = props.image;
     const children = props.children;
 

@@ -10,6 +10,8 @@ import SwapiResourse from "../../api/api";
 import ItemDetails, {Record} from "../item-details/item-details";
 import Row from "../row/row";
 import ErrorBoundry from "../error-boundry/error-boundry";
+import {PersonList, StarshipList, PlanetList} from "../sw-components/item-lists";
+import {PersonDetails, PlanetDetails, StarshipDetails} from "../sw-components/details";
 
 
 class App extends React.Component {
@@ -35,7 +37,7 @@ class App extends React.Component {
 
     render() {
 
-        const {getAllPeople, getAllPlanets } = this.swapi;
+        const {getAllPeople, getAllPlanets} = this.swapi;
 
         if (this.state.hasError) {
             return <ErrorIndicator/>
@@ -45,7 +47,7 @@ class App extends React.Component {
 
         const {getPerson, getStarship, getPersonImage, getStarshipImage} = this.swapi;
 
-        const personDetails = (
+        /*const personDetails = (
             <ItemDetails itemId={11} getData={getPerson} getImageUrl={getPersonImage}>
                 <Record field="gender" label="Gender"/>
                 <Record field="eyeColor" label="Eye Color"/>
@@ -58,26 +60,33 @@ class App extends React.Component {
                 <Record field="length" label="Length"/>
                 <Record field="costInCredits" label="Cost"/>
             </ItemDetails>
-        );
+        );*/
 
         return (
             <ErrorBoundry>
                 <div className="stardb-app">
-                    <Header />
+                    <Header/>
 
-                    <ItemList
+                    {/*<ItemList
                         getData={getAllPeople}
                         onItemSelected={() => {}}>
-
                         { ({name}) => <span>{name}</span> }
                     </ItemList>
 
                     <ItemList
                         getData={getAllPlanets}
                         onItemSelected={() => {}}>
-
                         { ({name}) => <span>{name}</span> }
-                    </ItemList>
+                    </ItemList>*/}
+
+                    <PersonList/>
+                    <PersonDetails itemId={11}/>
+
+                    <StarshipList/>
+                    <StarshipDetails itemId={9}/>
+
+                    <PlanetList/>
+                    <PlanetDetails itemId={5}/>
 
                 </div>
             </ErrorBoundry>
